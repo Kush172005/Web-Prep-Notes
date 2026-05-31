@@ -1,0 +1,383 @@
+Markup Language → which contain tags and codes to structure web content
+
+tag - <>
+
+element - combination of opening and closing tag <div>hello</div>
+
+- attributes are attached to html tags ex - `src`, `class`, `href`, `name`
+- while properties are written after the attributes or after “ = ”
+- attributes are used to initialise properties
+
+The **CSS Box Model** is a fundamental concept in web development that describes the structure and layout of HTML elements on a web page. According to the **official MDN Web Docs** and the **W3C CSS Specification**, every HTML element is considered a rectangular box, and the box model is used to determine the size and position of these boxes.
+
+**content, padding, border, and margin**
+
+arguments - which we pass during function call
+
+parameters - which we receive in function 
+
+doctype - tells the version of html to browser
+
+- first file which execute is index.html
+
+Q Inline & Block Element —> block level element take the full width of its parent and always start from the new line **Cons -** wastage of space
+
+- inline does not take the extra space even if it is offered
+- Inline - span, button, anchor      Block - div
+
+Q Inline-Block —> take the extra space if offered
+
+Error - Syntax, Reference error
+
+Types of Execution Context - functional, Global Execution Context
+
+An **execution context** is the environment in which JavaScript code is evaluated and executed.
+
+- **GEC** → The global execution context is the default execution context that is created when JavaScript code first starts running.
+- **FEC** → A function execution context is created whenever a function is invoked (called).
+
+Q - Immediately Function Execution 
+
+(function(){
+
+})()
+
+then and there banta hain or khatam hota hain
+
+we uses IFE to utilises the memory space it does not store any references
+
+TDZ Zone - The TDZ is the area in a block of code where a variable is in scope but cannot be accessed until it has been declared and initialized. Accessing it before declaration will throw a `ReferenceError`
+
+**Deep Copy**
+
+The combination of `JSON.stringify()` and `JSON.parse()` can create a deep copy of an object in a simple way by leveraging JSON's inherent structure. Here's a breakdown of how this works:
+
+Deep Copy → `JSON.parse(JSON.stringify(original))`
+
+Shallow Copy →  . . . original   `Spread Operator` 
+
+### 1. **`JSON.stringify()`**:
+
+- **What it does**: Converts a JavaScript object into a JSON string.
+- **How it works**: When you pass an object to `JSON.stringify()`, it recursively converts each property and nested object of the object into a string representation. It turns the object into a plain string format like this:
+
+```jsx
+
+const obj = { name: "John", address: { city: "New York" } };
+const jsonString = JSON.stringify(obj);
+console.log(jsonString); // '{"name":"John","address":{"city":"New York"}}'
+```
+
+### 2. **`JSON.parse()`**:
+
+- **What it does**: Converts a JSON string back into a JavaScript object.
+- **How it works**: When you pass the JSON string returned by `JSON.stringify()` to `JSON.parse()`, it reconstructs the original object from the string, but it's important to note that this creates a *new* object, not just a reference to the original one.
+
+```jsx
+const newObj = JSON.parse(jsonString);
+console.log(newObj); // { name: "John", address: { city: "New York" } }
+```
+
+### Why it works for deep copying:
+
+1. **Cloning by Value**: When you convert an object to a string with `JSON.stringify()`, all nested properties are converted to string representations as well. This means the entire object, including nested structures, is fully serialized into a string. When you parse this string with `JSON.parse()`, the entire object structure is rebuilt from scratch, ensuring that the new object is independent of the original.
+2. **No Shared References**: Since the `JSON.parse()` function creates a new object from the string and all the nested objects are serialized and then recreated, there are no references to the original objects. This means changes made to the new object won’t affect the original object, and vice versa.
+
+Hoisting - reserving memory to variable or function
+
+**Hoisting** is a JavaScript mechanism where variable and function declarations are processed before code execution, allowing them to be used before they are declared in the code.
+
+function scope = local scope
+
+Infinite Curry
+
+In Js Everything is Object
+
+function statement Vs function expression
+
+var a = function b () ⇒ {
+
+}
+
+function b() ⇒ {
+
+}
+
+Closures → Function with its own scope and its lexical scope
+
+Js tries to convert all mathematical operators except **NaN** and + to a **Number** before any comparison and calculation
+
+Spread And Rest ←→ Expand & collects element
+
+Constructor function
+
+Prototype - inheriting the property from parents
+
+Polyfill - A **polyfill** is code (usually JavaScript) used to provide modern functionality on older browsers that do not natively support it.
+
+**Prototype** - Every objects in Js have a hidden properties which points out to its parent
+
+All objects points to —> Null —> Null is nothing
+
+Prototypical Inheritance —>
+
+Prototypal inheritance is a feature of JavaScript that allows objects to inherit properties and methods from other objects
+
+Async and defer
+
+setPrototype, getPrototype
+
+Method Invocation 
+
+Polyfill - call bind apply filter map reduce forEach promise.All Promise.
+
+throttling -  Throttling ensures that the function is executed at regular intervals and will not be triggered more often than the specified time period.
+
+debouncing - user ke kuch particular time or delay ke baad kuch karna ho toh debouncing karte hain bahut kuch save karta hain
+
+basically function call ko delay karta hain user behaviour ke hisab se
+
+It's useful when you want to prevent a function from being triggered too frequently for actions like search input, where you only want to send a request when the user stops typing.
+
+**Event delegation** is a technique in JavaScript where instead of attaching event listeners to individual child elements, a single event listener is attached to a parent element to handle events for all child elements.
+
+- **Event Bubbling**: The event propagates from the target element up through the parent elements.
+- **Event Capturing**: The event propagates from the root element down to the target element
+
+In simple terms, **method invocation** in JavaScript is when you call a function that is attached to an object (this function is known as a method). When a method is invoked, the `this` keyword inside the method refers to the object it belongs to. This allows the method to access and manipulate the object’s properties.
+
+- `call()` is a method that allows you to invoke a function and explicitly set the value of `this`. You can also pass arguments one by one.
+- `apply()` is similar to `call()`, but instead of passing arguments one by one, you pass them as an array.
+- `bind()` doesn’t immediately invoke the function. Instead, it creates a new function with the `this` context and any preset arguments that you provide, and you can call it later
+
+In JavaScript, an execution context is an environment in which JavaScript code is executed.
+
+**Prototype -** Enables inheritance and method sharing between objects.
+
+**Polyfill -** Provides missing functionality in older browsers.
+
+**Props are used to pass data from a parent component to a child component, while state is used to manage data within a component**.
+
+---
+
+---
+
+---
+
+---
+
+React - 
+
+What is virtual dom
+
+what is react and why react
+
+what is lifecycle methods of react
+
+achieving same lifecycle methods using useffect
+
+what is a difference between props and state
+
+props drilling
+
+reconcillation and react fiber - **Incremental Rendering:**
+
+what is synthetic event
+
+what is preupdated virtual dom
+
+usestate useeffect
+
+usereducer vs usestate
+
+custom hook
+
+usecallback vs usememo
+
+react memo
+
+memoization
+
+controlled vs uncontrolled component
+
+imp of keys in react
+
+higher order components
+
+disadvantage of using index as a key
+
+Js
+
+Hoisting, scoping, lexical scoping, scope local scope, block scope, lexical scoping, lexical env, lexical context, gec
+
+Closures, currying, let var const, datatype in react
+
+normal function, arrow, iife, statemnet, expression, hof, callback, anonymous, first class
+
+type cohercion vs type casting
+
+Reduce
+
+slice and splice
+
+prototype prototypical inheritance
+
+deboucing, throttling
+
+deep copy, shallow copy
+
+cookies local session 
+
+pass by value, pass by reference
+
+bubbling capturing, how to stop propogation
+
+promise, create promise using promise using promise constroctor
+
+promise chaining
+
+async await
+
+event loop 
+
+web apis
+
+promise.all, promise.allSettle, promise.raise
+
+### **This**
+
+In JavaScript, `this` refers to the context in which a function is called. It represents the object that is currently executing the code. **Explicitly setting the value of `this`** means that you are manually defining what `this` should refer to within a function, rather than letting JavaScript decide automatically based on how the function is called
+
+### **DOM (Document Object Model)**
+
+**DOM** is a structured representation of the HTML elements that are present in a webpage or web app. DOM represents the entire UI of your application. The DOM is represented as a tree data structure. It contains a node for each UI element present in the web document.
+
+### **Virtual DOM**
+
+The **Virtual DOM (VDOM)** is a lightweight, in-memory representation of the actual DOM
+
+**Virtual DOM** is a programming concept where a "virtual" representation of a UI is kept in memory and synced with the "real" DOM by a library such as ReactDOM. This process is called reconciliation. The Virtual DOM enables React to update only the parts of the DOM that need to be updated, rather than re-rendering the entire page.
+
+### Reconciliation
+
+In the context of React, **reconciliation** is the process through which React updates the actual DOM to match the virtual DOM when changes occur. It involves identifying which elements in the virtual DOM have changed and efficiently updating only those parts in the real DOM.
+
+### Debouncing
+
+when we only want to make an api call when there is a certain delay of time between two events  
+
+**for example**
+
+- search input when user pause writing and the time interval of that pause is > than of certain time then only make an api request
+- button pressing event
+
+### Throttling
+
+when we make an api call continuously at a certain interval / delay of time 
+
+**for example**
+
+- Shooting game pistol and machine gun when we want that user can only shoot after certain delay of time
+
+## **Prototype**
+
+!Screenshot 2024-11-25 at 9.37.19 PM.png
+
+Normalisation
+
+schema 
+
+need of normalisation
+
+sql queries
+
+rank supplier by id of their orders
+
+window functions, joins self join 
+
+why this query, multiple ways to solve same question
+
+joins, group by 
+
+logical questions
+
+diff between group by and partition by
+
+differences
+
+schema building    VV-IMP 
+
+At least try to do the question
+
+**IMP —> WHAT HAPPENS INTERNALLY WHEN U HIT ANY URL IN BROWSER
+LINK**
+
+**Interview Question**
+
+Starvation → situation when micro and macro starv between each other for data
+
+setTimeout(() => {
+      console.log(1)
+}, [2000])
+
+setTimeout(() => {                // Interview Question
+      console.log(2)
+}, [1000])
+
+setTimeout(() => {
+     console.log(3)
+}, [5000])
+
+𝗗𝗦𝗔
+
+1. Sliding Window Techniques (Fixed & Variable)
+
+2. Two Pointer Approach
+
+3. Binary Search on Answer
+
+4. Top K Elements using Heap
+
+5. Graph Traversal (BFS & DFS)
+
+6. Dynamic Programming (0/1 Knapsack, LIS)
+
+7. Backtracking (Subsets, Permutations)
+
+8. Trie-based Problems
+
+𝗝𝗮𝘃𝗮 𝗕𝗮𝗰𝗸𝗲𝗻𝗱
+
+9. Multithreading and Synchronization
+
+10. Java Streams API and Functional Programming
+
+11. Exception Handling Best Practices
+
+12. Spring Boot Annotations and Lifecycle
+
+13. Microservices Architecture Fundamentals
+
+14. Caching (Redis, In-Memory)
+
+15. API Security (JWT, OAuth)
+
+16. Database Indexing and Query Optimization
+
+𝗦𝘆𝘀𝘁𝗲𝗺 𝗗𝗲𝘀𝗶𝗴𝗻
+
+17. Load Balancing Techniques
+
+18. Database Sharding and Replication
+
+19. Caching Strategies (CDN, Redis)
+
+20. Event-Driven Architecture
+
+21. Designing Scalable File Storage Systems
+
+22. CAP Theorem and Trade-offs
+
+23. Message Queues and Asynchronous Processing
+
+24. High Availability and Fault Tolerance

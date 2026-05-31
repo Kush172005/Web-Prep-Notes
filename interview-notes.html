@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Frontend Interview Prep Notes</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+    color: #1a1a1a;
+    background: #f8fafc;
+  }
+
+  /* Sidebar */
+  .sidebar {
+    position: fixed;
+    top: 0; left: 0;
+    width: 260px;
+    height: 100vh;
+    background: #0f172a;
+    color: #94a3b8;
+    overflow-y: auto;
+    padding: 24px 0;
+    z-index: 100;
+  }
+  .sidebar-title {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #64748b;
+    padding: 0 20px 16px;
+    border-bottom: 1px solid #1e293b;
+    margin-bottom: 12px;
+  }
+  .sidebar a {
+    display: block;
+    padding: 7px 20px;
+    color: #94a3b8;
+    text-decoration: none;
+    font-size: 13.5px;
+    transition: all 0.15s;
+    border-left: 3px solid transparent;
+  }
+  .sidebar a:hover {
+    color: #e2e8f0;
+    background: #1e293b;
+    border-left-color: #3b82f6;
+  }
+  .sidebar .section-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #475569;
+    padding: 16px 20px 6px;
+  }
+
+  /* Main content */
+  .main {
+    margin-left: 260px;
+    padding: 48px 56px;
+    max-width: 900px;
+  }
+
+  /* Cover */
+  .cover {
+    text-align: center;
+    padding: 64px 0 56px;
+    margin-bottom: 48px;
+    border-bottom: 2px solid #e2e8f0;
+  }
+  .cover h1 {
+    font-size: 38px;
+    color: #0f172a;
+    font-weight: 800;
+    margin-bottom: 12px;
+    border: none;
+  }
+  .cover p {
+    color: #64748b;
+    font-size: 15px;
+  }
+  .cover .tags {
+    margin-top: 16px;
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .tag {
+    background: #dbeafe;
+    color: #1e40af;
+    border-radius: 20px;
+    padding: 3px 12px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  h1 {
+    font-size: 26px;
+    color: #0f172a;
+    border-bottom: 3px solid #3b82f6;
+    padding-bottom: 10px;
+    margin: 48px 0 24px;
+    font-weight: 800;
+  }
+  h2 {
+    font-size: 19px;
+    color: #1e40af;
+    margin: 36px 0 12px;
+    border-left: 4px solid #3b82f6;
+    padding-left: 12px;
+    font-weight: 700;
+  }
+  h3 {
+    font-size: 15px;
+    color: #1e3a8a;
+    margin: 20px 0 8px;
+    font-weight: 600;
+  }
+  p { margin: 8px 0; }
+  ul, ol { margin: 8px 0 8px 24px; }
+  li { margin: 5px 0; }
+
+  code {
+    background: #f1f5f9;
+    border: 1px solid #e2e8f0;
+    border-radius: 4px;
+    padding: 2px 6px;
+    font-family: 'Fira Code', 'Cascadia Code', 'Courier New', monospace;
+    font-size: 13px;
+    color: #be185d;
+  }
+  pre {
+    background: #0f172a;
+    color: #e2e8f0;
+    border-radius: 10px;
+    padding: 18px 22px;
+    margin: 14px 0;
+    overflow-x: auto;
+    font-family: 'Fira Code', 'Cascadia Code', 'Courier New', monospace;
+    font-size: 13px;
+    line-height: 1.65;
+    border: 1px solid #1e293b;
+  }
+  pre code {
+    background: none;
+    border: none;
+    padding: 0;
+    color: #e2e8f0;
+    font-size: 13px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 14px 0;
+    font-size: 13.5px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  }
+  th {
+    background: #1e40af;
+    color: white;
+    padding: 10px 14px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 13px;
+  }
+  td {
+    padding: 9px 14px;
+    border-bottom: 1px solid #e2e8f0;
+    background: #fff;
+  }
+  tr:last-child td { border-bottom: none; }
+  tr:nth-child(even) td { background: #f8fafc; }
+
+  blockquote {
+    border-left: 4px solid #fbbf24;
+    background: #fffbeb;
+    padding: 12px 18px;
+    margin: 14px 0;
+    border-radius: 0 8px 8px 0;
+    color: #78350f;
+    font-size: 13.5px;
+  }
+
+  hr {
+    border: none;
+    border-top: 2px solid #e2e8f0;
+    margin: 48px 0;
+  }
+
+  strong { color: #0f172a; }
+
+  /* Scroll behavior */
+  html { scroll-behavior: smooth; }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .sidebar { display: none; }
+    .main { margin-left: 0; padding: 24px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Sidebar Navigation -->
+<nav class="sidebar">
+  <div class="sidebar-title">Interview Prep</div>
+
+  <div class="section-label">HTML & CSS</div>
+  <a href="#markup">Markup Language</a>
+  <a href="#doctype">DOCTYPE</a>
+  <a href="#display">Inline / Block / Inline-Block</a>
+  <a href="#boxmodel">CSS Box Model</a>
+
+  <div class="section-label">JavaScript</div>
+  <a href="#letvarconst">let, var, const</a>
+  <a href="#hoisting">Hoisting</a>
+  <a href="#tdz">Temporal Dead Zone</a>
+  <a href="#execcontext">Execution Context</a>
+  <a href="#scope">Scope & Lexical Scoping</a>
+  <a href="#closures">Closures</a>
+  <a href="#functions">Function Types</a>
+  <a href="#iife">IIFE</a>
+  <a href="#this">this Keyword</a>
+  <a href="#callapplybind">call, apply, bind</a>
+  <a href="#coercion">Type Coercion vs Casting</a>
+  <a href="#spreadrest">Spread vs Rest</a>
+  <a href="#copy">Deep vs Shallow Copy</a>
+  <a href="#passby">Pass by Value / Reference</a>
+  <a href="#prototype">Prototype & Inheritance</a>
+  <a href="#polyfill">Polyfill</a>
+  <a href="#currying">Currying</a>
+  <a href="#arrays">Array Methods</a>
+  <a href="#promises">Promises</a>
+  <a href="#asyncawait">Async / Await</a>
+  <a href="#eventloop">Event Loop</a>
+  <a href="#webapis">Web APIs</a>
+  <a href="#asyncdefer">async & defer</a>
+  <a href="#storage">Cookies / Storage</a>
+  <a href="#events">Event Delegation</a>
+  <a href="#dom">DOM</a>
+
+  <div class="section-label">React</div>
+  <a href="#whatisreact">What is React</a>
+  <a href="#vdom">Virtual DOM</a>
+  <a href="#reconciliation">Reconciliation & Fiber</a>
+  <a href="#lifecycle">Lifecycle & useEffect</a>
+  <a href="#propsstate">Props vs State</a>
+  <a href="#propsdrill">Props Drilling</a>
+  <a href="#synthetic">Synthetic Events</a>
+  <a href="#usereducer">useReducer vs useState</a>
+  <a href="#customhook">Custom Hook</a>
+  <a href="#memo">useMemo vs useCallback</a>
+  <a href="#reactmemo">React.memo</a>
+  <a href="#controlled">Controlled vs Uncontrolled</a>
+  <a href="#keys">Keys in React</a>
+  <a href="#hoc">Higher Order Components</a>
+
+  <div class="section-label">Browser & Network</div>
+  <a href="#url">What Happens on URL Hit</a>
+
+  <div class="section-label">Interview Q&A</div>
+  <a href="#settimeout">setTimeout Order</a>
+  <a href="#starvation">Starvation</a>
+
+  <div class="section-label">Topic Lists</div>
+  <a href="#dsa">DSA</a>
+  <a href="#systemdesign">System Design</a>
+  <a href="#sql">SQL / Database</a>
+</nav>
+
+<!-- Main Content -->
+<div class="main">
+
+  <div class="cover">
+    <h1>Frontend Interview Prep</h1>
+    <p>A complete reference guide — HTML, CSS, JavaScript, React, Browser & more</p>
+    <div class="tags">
+      <span class="tag">HTML</span>
+      <span class="tag">CSS</span>
+      <span class="tag">JavaScript</span>
+      <span class="tag">React</span>
+      <span class="tag">Browser</span>
+      <span class="tag">System Design</span>
+    </div>
+  </div>
+
+  <!-- ======================== SECTION 1: HTML & CSS ======================== -->
+  <h1>Section 1 — HTML & CSS</h1>
+
+  <h2 id="markup">Markup Language</h2>
+  <p>A markup language uses <strong>tags and codes</strong> to structure web content. HTML (HyperText Markup Language) is the standard markup language for web pages.</p>
+  <ul>
+    <li><strong>Tag</strong>: <code>&lt; &gt;</code> — the building block syntax</li>
+    <li><strong>Element</strong>: Combination of opening and closing tag → <code>&lt;div&gt;hello&lt;/div&gt;</code></li>
+    <li><strong>Attribute</strong>: Attached to HTML tags to provide additional info → <code>src</code>, <code>class</code>, <code>href</code>, <code>name</code></li>
+    <li><strong>Property</strong>: The value assigned after <code>=</code> → <code>class="container"</code></li>
+    <li>Attributes <strong>initialize</strong> properties. Once the browser parses HTML, attributes become DOM properties.</li>
+  </ul>
+
+  <h2 id="doctype">DOCTYPE</h2>
+  <pre><code>&lt;!DOCTYPE html&gt;</code></pre>
+  <p>Tells the browser which version of HTML the document uses. <code>&lt;!DOCTYPE html&gt;</code> means HTML5. The first file that executes is <code>index.html</code>.</p>
+
+  <h2 id="display">Inline vs Block vs Inline-Block</h2>
+  <table>
+    <tr><th>Type</th><th>Behavior</th><th>Examples</th></tr>
+    <tr><td>Block</td><td>Takes full width of parent, always starts on a new line</td><td><code>div</code>, <code>p</code>, <code>h1</code></td></tr>
+    <tr><td>Inline</td><td>Takes only needed space, ignores width/height</td><td><code>span</code>, <code>button</code>, <code>a</code></td></tr>
+    <tr><td>Inline-Block</td><td>Sits inline but accepts width, height, padding</td><td><code>img</code></td></tr>
+  </table>
+  <ul>
+    <li><strong>Block con</strong>: Wastes horizontal space</li>
+    <li><strong>Inline</strong>: Won't accept <code>width</code>/<code>height</code></li>
+    <li><strong>Inline-Block</strong>: Best of both worlds</li>
+  </ul>
+
+  <h2 id="boxmodel">CSS Box Model</h2>
+  <p>Every HTML element is a rectangular box with 4 layers <em>(outside → inside)</em>:</p>
+  <pre><code>Margin → Border → Padding → Content</code></pre>
+  <ul>
+    <li><strong>Content</strong>: The actual text/image</li>
+    <li><strong>Padding</strong>: Space between content and border</li>
+    <li><strong>Border</strong>: The outline of the element</li>
+    <li><strong>Margin</strong>: Space outside the border (separation from other elements)</li>
+  </ul>
+  <pre><code>.box {
+  width: 200px;        /* content width */
+  padding: 10px;       /* inner space */
+  border: 2px solid;   /* outline */
+  margin: 20px;        /* outer space */
+}</code></pre>
+
+  <hr>
+
+  <!-- ======================== SECTION 2: JAVASCRIPT ======================== -->
+  <h1>Section 2 — JavaScript</h1>
+
+  <h2 id="letvarconst">let, var, const</h2>
+  <table>
+    <tr><th></th><th>var</th><th>let</th><th>const</th></tr>
+    <tr><td>Scope</td><td>Function</td><td>Block</td><td>Block</td></tr>
+    <tr><td>Hoisted</td><td>Yes (as <code>undefined</code>)</td><td>Yes (TDZ)</td><td>Yes (TDZ)</td></tr>
+    <tr><td>Re-declare</td><td>Yes</td><td>No</td><td>No</td></tr>
+    <tr><td>Re-assign</td><td>Yes</td><td>Yes</td><td>No</td></tr>
+  </table>
+
+  <h2 id="hoisting">Hoisting</h2>
+  <p><strong>Hoisting</strong> = JS reserves memory for variable and function declarations <strong>before</strong> code runs (during the Memory Creation Phase).</p>
+  <ul>
+    <li><code>var</code> → hoisted and initialized as <code>undefined</code></li>
+    <li><code>let</code>/<code>const</code> → hoisted but in <strong>TDZ</strong> (cannot access before declaration)</li>
+    <li><strong>Function statements</strong> → fully hoisted, can be called before declaration</li>
+  </ul>
+  <pre><code>console.log(a); // undefined  (var hoisted)
+var a = 5;
+
+console.log(b); // ReferenceError  (TDZ)
+let b = 5;
+
+greet(); // Works! Function statements are fully hoisted
+function greet() { console.log("Hello"); }</code></pre>
+
+  <h2 id="tdz">Temporal Dead Zone (TDZ)</h2>
+  <p>The TDZ is the area in a block where a variable is <strong>in scope but cannot be accessed</strong> until it is declared and initialized. Accessing it throws a <code>ReferenceError</code>.</p>
+  <pre><code>console.log(x); // ReferenceError: Cannot access 'x' before initialization
+let x = 10;</code></pre>
+
+  <h2 id="execcontext">Execution Context</h2>
+  <p>The <strong>environment</strong> in which JavaScript code is evaluated and executed.</p>
+  <ul>
+    <li><strong>GEC (Global Execution Context)</strong>: Created when JS first starts running. Only one GEC exists.</li>
+    <li><strong>FEC (Function Execution Context)</strong>: Created every time a function is invoked. Each call gets its own FEC.</li>
+  </ul>
+  <p>Each execution context has two phases:</p>
+  <ol>
+    <li><strong>Memory Creation Phase</strong> → Variables hoisted, functions stored in memory</li>
+    <li><strong>Code Execution Phase</strong> → Code runs line by line</li>
+  </ol>
+
+  <h2 id="scope">Scope & Lexical Scoping</h2>
+  <ul>
+    <li><strong>Local/Function Scope</strong>: Variables inside a function are only accessible within it</li>
+    <li><strong>Block Scope</strong>: <code>let</code>/<code>const</code> inside <code>{}</code> are block-scoped</li>
+    <li><strong>Lexical Scope</strong>: A function can access variables from its outer scope based on where it was <strong>defined</strong> (not where it's called)</li>
+  </ul>
+  <pre><code>function outer() {
+  let x = 10;
+  function inner() {
+    console.log(x); // 10 — lexical scope gives inner access to outer's x
+  }
+  inner();
+}</code></pre>
+
+  <h2 id="closures">Closures</h2>
+  <p>A <strong>closure</strong> is a function that retains access to its own scope <strong>and</strong> its outer (lexical) scope even after the outer function has finished executing.</p>
+  <pre><code>function counter() {
+  let count = 0;
+  return function() {
+    count++;
+    return count;
+  };
+}
+
+const increment = counter();
+increment(); // 1
+increment(); // 2  — count persists in closure</code></pre>
+
+  <h2 id="functions">Function Types</h2>
+  <table>
+    <tr><th>Type</th><th>Syntax</th><th>Notes</th></tr>
+    <tr><td>Function Statement</td><td><code>function greet() {}</code></td><td>Fully hoisted</td></tr>
+    <tr><td>Function Expression</td><td><code>const greet = function() {}</code></td><td>Not hoisted</td></tr>
+    <tr><td>Arrow Function</td><td><code>const greet = () => {}</code></td><td>No own <code>this</code></td></tr>
+    <tr><td>IIFE</td><td><code>(function() {})()</code></td><td>Runs immediately, no reference stored</td></tr>
+    <tr><td>Anonymous</td><td><code>function() {}</code></td><td>No name</td></tr>
+    <tr><td>Higher Order (HOF)</td><td>Takes or returns a function</td><td>e.g., <code>map</code>, <code>filter</code></td></tr>
+    <tr><td>Callback</td><td>Passed as an argument</td><td>Called later by another function</td></tr>
+    <tr><td>First-Class Function</td><td>Functions treated as values</td><td>Can be assigned, passed, returned</td></tr>
+  </table>
+  <h3>Function Statement vs Expression</h3>
+  <pre><code>// Statement — hoisted
+function b() { }
+
+// Expression — not hoisted
+var a = function b() { };</code></pre>
+
+  <h2 id="iife">IIFE (Immediately Invoked Function Expression)</h2>
+  <p>Runs immediately and is then discarded — <strong>does not store any reference</strong>, conserves memory space.</p>
+  <pre><code>(function() {
+  console.log("Runs once, immediately");
+})();</code></pre>
+
+  <h2 id="this">this Keyword</h2>
+  <p><code>this</code> refers to the <strong>object currently executing the code</strong>. Its value depends on <strong>how</strong> the function is called, not where it's defined.</p>
+  <table>
+    <tr><th>Context</th><th>this refers to</th></tr>
+    <tr><td>Global scope</td><td><code>window</code> (browser) / <code>global</code> (Node)</td></tr>
+    <tr><td>Object method</td><td>The object itself</td></tr>
+    <tr><td>Arrow function</td><td>Inherited from outer scope (no own <code>this</code>)</td></tr>
+    <tr><td><code>call</code> / <code>apply</code> / <code>bind</code></td><td>Explicitly set</td></tr>
+  </table>
+
+  <h2 id="callapplybind">call, apply, bind</h2>
+  <p>All three let you <strong>explicitly set <code>this</code></strong>:</p>
+  <pre><code>const person = { name: "Kush" };
+
+function greet(city, country) {
+  console.log(`${this.name} from ${city}, ${country}`);
+}
+
+greet.call(person, "Delhi", "India");       // args one by one — invokes immediately
+greet.apply(person, ["Delhi", "India"]);    // args as array  — invokes immediately
+const bound = greet.bind(person, "Delhi"); // returns new function — call later
+bound("India");</code></pre>
+
+  <h2 id="coercion">Type Coercion vs Type Casting</h2>
+  <ul>
+    <li><strong>Type Coercion</strong>: JS <strong>automatically</strong> converts types (implicit)</li>
+    <li><strong>Type Casting</strong>: <strong>Manually</strong> converting types (explicit)</li>
+  </ul>
+  <pre><code>// Coercion (implicit)
+"5" + 2   // "52"  — number coerced to string (+ triggers string concat)
+"5" - 2   // 3     — string coerced to number
+
+// Casting (explicit)
+Number("5")   // 5
+String(5)     // "5"
+Boolean(0)    // false</code></pre>
+  <blockquote>JS converts all mathematical operators <strong>except <code>+</code> and <code>NaN</code></strong> to Number before any comparison or calculation.</blockquote>
+
+  <h2 id="spreadrest">Spread vs Rest</h2>
+  <table>
+    <tr><th>Operator</th><th>Role</th><th>Use</th></tr>
+    <tr><td>Spread <code>...arr</code></td><td><strong>Expands</strong> elements</td><td>Copying arrays/objects, passing args</td></tr>
+    <tr><td>Rest <code>...args</code></td><td><strong>Collects</strong> elements</td><td>Function parameters</td></tr>
+  </table>
+  <pre><code>const arr = [1, 2, 3];
+Math.max(...arr); // Spread: expands to Math.max(1, 2, 3)
+
+function sum(...nums) { // Rest: collects all args into array
+  return nums.reduce((a, b) => a + b, 0);
+}
+sum(1, 2, 3); // 6</code></pre>
+
+  <h2 id="copy">Deep Copy vs Shallow Copy</h2>
+  <ul>
+    <li><strong>Shallow Copy</strong>: Copies only the <strong>top level</strong>. Nested objects are still <strong>referenced</strong> (shared).</li>
+    <li><strong>Deep Copy</strong>: Completely <strong>independent</strong> copy at every level.</li>
+  </ul>
+  <pre><code>// Shallow Copy — spread operator
+const copy = { ...original };
+copy.address.city = "Mumbai"; // also changes original.address.city!
+
+// Deep Copy — JSON method
+const deepCopy = JSON.parse(JSON.stringify(original));
+deepCopy.address.city = "Mumbai"; // original is untouched</code></pre>
+  <blockquote><strong>Limitation of JSON method</strong>: Loses <code>undefined</code>, functions, <code>Date</code>, <code>RegExp</code>.<br>
+  <strong>Modern alternative</strong>: <code>structuredClone(original)</code> — handles more types correctly.</blockquote>
+
+  <h2 id="passby">Pass by Value vs Pass by Reference</h2>
+  <ul>
+    <li><strong>Primitives</strong> (number, string, boolean) → <strong>by value</strong> (copy is made)</li>
+    <li><strong>Objects/Arrays</strong> → <strong>by reference</strong> (both point to same memory location)</li>
+  </ul>
+  <pre><code>let a = 5;
+let b = a;
+b = 10;
+console.log(a); // 5 — unchanged, b got a copy
+
+let obj = { x: 1 };
+let obj2 = obj;
+obj2.x = 99;
+console.log(obj.x); // 99 — same reference</code></pre>
+
+  <h2 id="prototype">Prototype & Prototypal Inheritance</h2>
+  <p>Every object in JS has a <strong>hidden <code>[[Prototype]]</code></strong> property pointing to its parent. This forms the <strong>prototype chain</strong>.</p>
+  <ul>
+    <li>All objects ultimately end at <code>null</code> at the top of the chain.</li>
+    <li>Enables <strong>inheritance</strong> — child objects can access methods/properties of their parent.</li>
+  </ul>
+  <pre><code>function Animal(name) {
+  this.name = name;
+}
+Animal.prototype.speak = function() {
+  console.log(`${this.name} makes a sound`);
+};
+
+const dog = new Animal("Dog");
+dog.speak(); // "Dog makes a sound" — inherited from Animal.prototype</code></pre>
+  <ul>
+    <li><code>Object.setPrototypeOf(obj, parent)</code> — sets prototype</li>
+    <li><code>Object.getPrototypeOf(obj)</code> — gets prototype</li>
+  </ul>
+
+  <h2 id="polyfill">Polyfill</h2>
+  <p>Code that <strong>provides modern functionality on older browsers</strong> that don't natively support it.</p>
+  <p>Common polyfills to know how to implement: <code>call</code>, <code>bind</code>, <code>apply</code>, <code>filter</code>, <code>map</code>, <code>reduce</code>, <code>forEach</code>, <code>Promise.all</code></p>
+
+  <h2 id="currying">Currying</h2>
+  <p>Transforms a function taking multiple arguments into a series of functions each taking <strong>one argument at a time</strong>.</p>
+  <pre><code>// Infinite curry example
+function add(a) {
+  return function(b) {
+    if (b !== undefined) return add(a + b);
+    return a;
+  };
+}
+add(1)(2)(3)(); // 6</code></pre>
+
+  <h2 id="arrays">Array Methods</h2>
+  <h3>slice vs splice</h3>
+  <table>
+    <tr><th></th><th>slice(start, end)</th><th>splice(start, deleteCount)</th></tr>
+    <tr><td>Mutates original?</td><td>No</td><td>Yes</td></tr>
+    <tr><td>Returns</td><td>New array (extracted portion)</td><td>Array of removed elements</td></tr>
+    <tr><td>Use</td><td>Extract / copy</td><td>Add or remove elements</td></tr>
+  </table>
+  <pre><code>const arr = [1, 2, 3, 4, 5];
+arr.slice(1, 3);   // [2, 3] — original unchanged
+arr.splice(1, 2);  // removes 2 elements from index 1; arr becomes [1, 4, 5]</code></pre>
+
+  <h3>reduce</h3>
+  <p>Reduces an array to a <strong>single value</strong> by running a function on each element:</p>
+  <pre><code>const sum = [1, 2, 3, 4].reduce((accumulator, current) => accumulator + current, 0);
+// 0+1=1 → 1+2=3 → 3+3=6 → 6+4=10
+// Result: 10</code></pre>
+
+  <h2 id="promises">Promises</h2>
+  <p>An object representing the <strong>eventual completion or failure</strong> of an asynchronous operation.</p>
+  <p><strong>States</strong>: <code>pending</code> → <code>fulfilled</code> or <code>rejected</code></p>
+  <pre><code>// Creating a Promise using constructor
+const p = new Promise((resolve, reject) => {
+  setTimeout(() => resolve("Done!"), 1000);
+  // Or: reject("Error!")
+});
+
+// Consuming
+p.then(val => console.log(val))
+ .catch(err => console.error(err))
+ .finally(() => console.log("Always runs"));</code></pre>
+
+  <h3>Promise Chaining</h3>
+  <pre><code>fetch('/api/user')
+  .then(res => res.json())
+  .then(data => console.log(data))
+  .catch(err => console.error(err));</code></pre>
+
+  <h3>Promise Combinators</h3>
+  <table>
+    <tr><th>Method</th><th>Behavior</th></tr>
+    <tr><td><code>Promise.all([...])</code></td><td>Waits for <strong>all</strong> to fulfill. Rejects if <strong>any one</strong> rejects</td></tr>
+    <tr><td><code>Promise.allSettled([...])</code></td><td>Waits for <strong>all</strong>. Returns status+value of each regardless of outcome</td></tr>
+    <tr><td><code>Promise.race([...])</code></td><td>Resolves/rejects as soon as <strong>first one settles</strong></td></tr>
+    <tr><td><code>Promise.any([...])</code></td><td>Resolves with <strong>first fulfilled</strong>. Rejects only if <strong>all</strong> fail</td></tr>
+  </table>
+
+  <h2 id="asyncawait">Async / Await</h2>
+  <p>Syntactic sugar over Promises — makes async code look and read synchronously.</p>
+  <pre><code>async function fetchData() {
+  try {
+    const res = await fetch('/api/data');   // waits for promise to resolve
+    const data = await res.json();
+    console.log(data);
+  } catch (err) {
+    console.error(err);
+  }
+}</code></pre>
+
+  <h2 id="eventloop">Event Loop</h2>
+  <p>JS is <strong>single-threaded</strong> but handles async via the Event Loop.</p>
+  <ol>
+    <li><strong>Call Stack</strong> — executes synchronous code</li>
+    <li><strong>Web APIs</strong> — handles async tasks outside JS (setTimeout, fetch, DOM events)</li>
+    <li><strong>Microtask Queue</strong> — Promise <code>.then()</code> callbacks — <strong>higher priority</strong></li>
+    <li><strong>Callback Queue (Macrotask)</strong> — setTimeout/setInterval callbacks</li>
+    <li><strong>Event Loop</strong> — when Call Stack is empty: processes all microtasks first, then one macrotask</li>
+  </ol>
+  <pre><code>console.log("start");
+setTimeout(() => console.log("timeout"), 0);
+Promise.resolve().then(() => console.log("promise"));
+console.log("end");
+
+// Output: start → end → promise → timeout</code></pre>
+  <blockquote><strong>Starvation</strong>: If microtasks keep queuing more microtasks infinitely, macrotasks (setTimeout) never get to execute.</blockquote>
+
+  <h2 id="webapis">Web APIs</h2>
+  <p>Browser-provided APIs that are <strong>not part of the JS engine</strong> — they run outside the call stack:</p>
+  <p><code>setTimeout</code>, <code>setInterval</code>, <code>fetch</code>, <code>DOM API</code>, <code>localStorage</code>, <code>Geolocation</code>, etc.</p>
+  <p>When the async task completes, the callback is pushed to the appropriate queue for the Event Loop to pick up.</p>
+
+  <h2 id="asyncdefer">async and defer (Script Loading)</h2>
+  <pre><code>&lt;script src="app.js"&gt;&lt;/script&gt;          &lt;!-- blocks HTML parsing --&gt;
+&lt;script async src="app.js"&gt;&lt;/script&gt;    &lt;!-- downloads parallel, executes when ready --&gt;
+&lt;script defer src="app.js"&gt;&lt;/script&gt;    &lt;!-- downloads parallel, executes after HTML parsed --&gt;</code></pre>
+  <table>
+    <tr><th></th><th>async</th><th>defer</th></tr>
+    <tr><td>Download</td><td>Parallel to HTML parsing</td><td>Parallel to HTML parsing</td></tr>
+    <tr><td>Execute</td><td>Immediately when downloaded (pauses HTML)</td><td>After HTML fully parsed</td></tr>
+    <tr><td>Order guaranteed</td><td>No</td><td>Yes (in order)</td></tr>
+    <tr><td>Use case</td><td>Independent scripts (analytics)</td><td>Scripts that need the DOM</td></tr>
+  </table>
+
+  <h2 id="storage">Cookies, localStorage, sessionStorage</h2>
+  <table>
+    <tr><th></th><th>Cookies</th><th>localStorage</th><th>sessionStorage</th></tr>
+    <tr><td>Capacity</td><td>~4KB</td><td>~5-10MB</td><td>~5MB</td></tr>
+    <tr><td>Expiry</td><td>Set manually</td><td>Never (until cleared)</td><td>When tab/window closes</td></tr>
+    <tr><td>Sent with HTTP requests</td><td>Yes (auto)</td><td>No</td><td>No</td></tr>
+    <tr><td>Access</td><td>JS + Server</td><td>JS only</td><td>JS only</td></tr>
+  </table>
+
+  <h2 id="events">Event Delegation, Bubbling, Capturing</h2>
+  <ul>
+    <li><strong>Event Bubbling</strong>: Event travels from <strong>target → up to root</strong> (default behavior)</li>
+    <li><strong>Event Capturing</strong>: Event travels from <strong>root → down to target</strong> (use <code>{capture: true}</code>)</li>
+    <li><strong>Event Delegation</strong>: Attach <strong>one listener on parent</strong> to handle events from all children — efficient, works for dynamically added elements</li>
+  </ul>
+  <pre><code>// Event Delegation Example
+document.getElementById("list").addEventListener("click", function(e) {
+  if (e.target.tagName === "LI") {
+    console.log("Clicked:", e.target.textContent);
+  }
+});
+
+e.stopPropagation()  // Stops event from bubbling/capturing further
+e.preventDefault()   // Prevents default browser behavior</code></pre>
+
+  <h2 id="dom">DOM (Document Object Model)</h2>
+  <p>A <strong>tree-structured</strong> representation of the HTML elements in a webpage. Represents the entire UI of your application as a tree of nodes.</p>
+  <pre><code>document
+└── html
+    ├── head
+    └── body
+        ├── div
+        │   └── p → "Hello"
+        └── span</code></pre>
+
+  <h3>Errors</h3>
+  <ul>
+    <li><strong>Syntax Error</strong>: Code violates JS grammar rules (e.g., <code>let = 5;</code>)</li>
+    <li><strong>Reference Error</strong>: Accessing an undeclared variable or one in TDZ</li>
+  </ul>
+
+  <hr>
+
+  <!-- ======================== SECTION 3: REACT ======================== -->
+  <h1>Section 3 — React</h1>
+
+  <h2 id="whatisreact">What is React & Why React?</h2>
+  <p>React is a <strong>JavaScript library</strong> for building user interfaces, made by Meta (Facebook).</p>
+  <ul>
+    <li><strong>Component-based</strong> → reusable, maintainable UI pieces</li>
+    <li><strong>Virtual DOM</strong> → efficient updates (only re-renders what changed)</li>
+    <li><strong>One-way data flow</strong> → predictable state management</li>
+    <li><strong>Declarative</strong> → describe what UI should look like; React handles the how</li>
+  </ul>
+
+  <h2 id="vdom">Virtual DOM</h2>
+  <p>A <strong>lightweight in-memory representation</strong> of the actual DOM. When state changes:</p>
+  <ol>
+    <li>React builds a <strong>new Virtual DOM tree</strong></li>
+    <li><strong>Diffing</strong>: Compares new VDOM with the <strong>pre-updated VDOM</strong> (snapshot before change)</li>
+    <li><strong>Reconciliation</strong>: Only the changed nodes get updated in the real DOM</li>
+  </ol>
+  <p>This avoids expensive full-page re-renders.</p>
+
+  <h2 id="reconciliation">Reconciliation & React Fiber</h2>
+  <p><strong>Reconciliation</strong>: The process React uses to update the actual DOM to match the virtual DOM — identifying what changed and updating only those parts efficiently.</p>
+  <p><strong>React Fiber</strong> (React 16+): The reconciliation engine rewrite that enables <strong>incremental rendering</strong> — breaking render work into chunks, allowing React to pause, prioritize, and resume work across frames (smoother animations and interactions).</p>
+
+  <h2 id="lifecycle">Component Lifecycle & useEffect</h2>
+  <table>
+    <tr><th>Phase</th><th>Class Method</th><th>Hooks Equivalent</th></tr>
+    <tr><td>Mounting</td><td><code>componentDidMount</code></td><td><code>useEffect(() => {}, [])</code></td></tr>
+    <tr><td>Updating</td><td><code>componentDidUpdate</code></td><td><code>useEffect(() => {}, [dep])</code></td></tr>
+    <tr><td>Unmounting</td><td><code>componentWillUnmount</code></td><td>Cleanup function in <code>useEffect</code></td></tr>
+  </table>
+  <pre><code>// Runs once on mount (componentDidMount)
+useEffect(() => {}, []);
+
+// Runs when 'dep' changes (componentDidUpdate)
+useEffect(() => {}, [dep]);
+
+// Cleanup on unmount (componentWillUnmount)
+useEffect(() => {
+  return () => { /* cleanup: clear interval, unsubscribe */ };
+}, []);</code></pre>
+
+  <h2 id="propsstate">Props vs State</h2>
+  <table>
+    <tr><th></th><th>Props</th><th>State</th></tr>
+    <tr><td>Passed from</td><td>Parent to child</td><td>Managed within component</td></tr>
+    <tr><td>Mutable</td><td>No (read-only)</td><td>Yes</td></tr>
+    <tr><td>Triggers re-render</td><td>On parent re-render</td><td>On state change via setter</td></tr>
+  </table>
+  <pre><code>// Props
+function Child({ name }) { return &lt;div&gt;{name}&lt;/div&gt;; }
+
+// State
+function Counter() {
+  const [count, setCount] = useState(0);
+  return &lt;button onClick={() => setCount(count + 1)}&gt;{count}&lt;/button&gt;;
+}</code></pre>
+
+  <h2 id="propsdrill">Props Drilling</h2>
+  <p>Passing data through <strong>many nested component levels</strong> even when intermediate components don't need it.</p>
+  <ul>
+    <li><strong>Problem</strong>: Tight coupling, hard to maintain</li>
+    <li><strong>Solution</strong>: Context API, Redux, or Zustand</li>
+  </ul>
+
+  <h2 id="synthetic">Synthetic Events</h2>
+  <p>React wraps native browser events in <strong>SyntheticEvent</strong> — a cross-browser wrapper ensuring consistent event behavior across all browsers.</p>
+  <pre><code>function handleClick(e) {
+  e.preventDefault();   // consistent behavior in all browsers
+  e.stopPropagation();
+}</code></pre>
+
+  <h2 id="usereducer">useReducer vs useState</h2>
+  <ul>
+    <li><strong>useState</strong>: For simple, independent state (counter, toggle, input)</li>
+    <li><strong>useReducer</strong>: For complex state logic where next state depends on previous, or multiple sub-values</li>
+  </ul>
+  <pre><code>function reducer(state, action) {
+  switch (action.type) {
+    case "INCREMENT": return { count: state.count + 1 };
+    case "RESET":     return { count: 0 };
+    default:          return state;
+  }
+}
+
+const [state, dispatch] = useReducer(reducer, { count: 0 });
+dispatch({ type: "INCREMENT" });</code></pre>
+
+  <h2 id="customhook">Custom Hook</h2>
+  <p>A function starting with <code>use</code> that can call other hooks. Used to <strong>extract and reuse stateful logic</strong> across components.</p>
+  <pre><code>function useFetch(url) {
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch(url)
+      .then(r => r.json())
+      .then(d => { setData(d); setLoading(false); });
+  }, [url]);
+
+  return { data, loading };
+}
+
+// Usage in component
+const { data, loading } = useFetch('/api/users');</code></pre>
+
+  <h2 id="memo">useMemo vs useCallback</h2>
+  <table>
+    <tr><th></th><th>useMemo</th><th>useCallback</th></tr>
+    <tr><td>Returns</td><td>Memoized <strong>value</strong></td><td>Memoized <strong>function</strong></td></tr>
+    <tr><td>Recomputes when</td><td>Dependency changes</td><td>Dependency changes</td></tr>
+    <tr><td>Use for</td><td>Expensive calculations</td><td>Stable function reference for child components</td></tr>
+  </table>
+  <pre><code>const result = useMemo(() => expensiveCalc(data), [data]);
+const handler = useCallback(() => doSomething(id), [id]);</code></pre>
+
+  <h2 id="reactmemo">Memoization & React.memo</h2>
+  <p><strong>Memoization</strong>: Caching results of expensive function calls so they aren't recalculated when inputs haven't changed.</p>
+  <p><strong>React.memo</strong>: Wraps a component. Prevents re-render if <strong>props haven't changed</strong>.</p>
+  <pre><code>const MyComponent = React.memo(function({ name }) {
+  return &lt;div&gt;{name}&lt;/div&gt;;
+});
+// Won't re-render if 'name' prop hasn't changed</code></pre>
+
+  <h2 id="controlled">Controlled vs Uncontrolled Components</h2>
+  <table>
+    <tr><th></th><th>Controlled</th><th>Uncontrolled</th></tr>
+    <tr><td>Data managed by</td><td>React state</td><td>DOM itself (via <code>ref</code>)</td></tr>
+    <tr><td>Source of truth</td><td><code>useState</code></td><td>DOM</td></tr>
+    <tr><td>Example</td><td><code>&lt;input value={val} onChange={...}/&gt;</code></td><td><code>&lt;input ref={inputRef}/&gt;</code></td></tr>
+  </table>
+
+  <h2 id="keys">Keys in React</h2>
+  <p>Keys help React identify which list items <strong>changed, added, or removed</strong>. Must be <strong>unique among siblings</strong>.</p>
+  <p><strong>Why not use index as key?</strong><br>
+  When items reorder or get inserted/deleted, indexes shift → React maps wrong state to wrong element → bugs, incorrect UI, poor performance.</p>
+  <pre><code>// Bad
+items.map((item, i) => &lt;Item key={i} /&gt;);
+
+// Good
+items.map(item => &lt;Item key={item.id} /&gt;);</code></pre>
+
+  <h2 id="hoc">Higher Order Components (HOC)</h2>
+  <p>A function that <strong>takes a component</strong> and <strong>returns a new component</strong> with added functionality. Pattern for reusing component logic.</p>
+  <pre><code>function withAuth(WrappedComponent) {
+  return function(props) {
+    if (!isLoggedIn) return &lt;Redirect to="/login" /&gt;;
+    return &lt;WrappedComponent {...props} /&gt;;
+  };
+}
+
+const ProtectedDashboard = withAuth(Dashboard);</code></pre>
+
+  <hr>
+
+  <!-- ======================== SECTION 4: BROWSER ======================== -->
+  <h1>Section 4 — Browser & Network</h1>
+
+  <h2 id="url">What Happens When You Hit a URL in the Browser</h2>
+  <ol>
+    <li><strong>URL Parsing</strong> → Browser identifies protocol, domain, path</li>
+    <li><strong>DNS Resolution</strong> → Domain name → IP address (checks cache first, then DNS servers)</li>
+    <li><strong>TCP Connection</strong> → 3-way handshake (SYN → SYN-ACK → ACK)</li>
+    <li><strong>TLS Handshake</strong> (HTTPS only) → Encrypted connection established</li>
+    <li><strong>HTTP Request</strong> → Browser sends <code>GET</code> request to server</li>
+    <li><strong>Server Response</strong> → Returns HTML, status code, headers</li>
+    <li><strong>HTML Parsing</strong> → Browser builds <strong>DOM tree</strong></li>
+    <li><strong>CSS Parsing</strong> → Browser builds <strong>CSSOM tree</strong></li>
+    <li><strong>Render Tree</strong> → DOM + CSSOM merged</li>
+    <li><strong>Layout (Reflow)</strong> → Calculate position/size of each element</li>
+    <li><strong>Paint</strong> → Pixels drawn to screen</li>
+    <li><strong>JS Execution</strong> → Scripts run (async/defer affects timing)</li>
+  </ol>
+
+  <hr>
+
+  <!-- ======================== SECTION 5: INTERVIEW Q&A ======================== -->
+  <h1>Section 5 — Interview Questions</h1>
+
+  <h2 id="settimeout">setTimeout Output Order</h2>
+  <pre><code>setTimeout(() => console.log(1), 2000);
+setTimeout(() => console.log(2), 1000);
+setTimeout(() => console.log(3), 5000);
+
+// Output: 2 → 1 → 3  (sorted by delay, not by declaration order)</code></pre>
+
+  <h3>Event Loop Priority (Micro vs Macro)</h3>
+  <pre><code>console.log("start");
+setTimeout(() => console.log("timeout"), 0);
+Promise.resolve().then(() => console.log("promise"));
+console.log("end");
+
+// Output: start → end → promise → timeout
+// Microtasks (Promise) always run before Macrotasks (setTimeout)</code></pre>
+
+  <h2 id="starvation">Starvation</h2>
+  <p>A situation where <strong>microtasks keep queuing more microtasks</strong>, preventing macrotasks (setTimeout callbacks) from ever executing — the call stack is never truly free.</p>
+
+  <hr>
+
+  <!-- ======================== SECTION 6: TOPIC LISTS ======================== -->
+  <h1>Section 6 — Topic Reference Lists</h1>
+
+  <h2 id="dsa">DSA Topics</h2>
+  <ol>
+    <li>Sliding Window Techniques (Fixed &amp; Variable)</li>
+    <li>Two Pointer Approach</li>
+    <li>Binary Search on Answer</li>
+    <li>Top K Elements using Heap</li>
+    <li>Graph Traversal (BFS &amp; DFS)</li>
+    <li>Dynamic Programming (0/1 Knapsack, LIS)</li>
+    <li>Backtracking (Subsets, Permutations)</li>
+    <li>Trie-based Problems</li>
+  </ol>
+
+  <h2 id="systemdesign">System Design Topics</h2>
+  <ol>
+    <li>Load Balancing Techniques</li>
+    <li>Database Sharding and Replication</li>
+    <li>Caching Strategies (CDN, Redis)</li>
+    <li>Event-Driven Architecture</li>
+    <li>Designing Scalable File Storage Systems</li>
+    <li>CAP Theorem and Trade-offs</li>
+    <li>Message Queues and Asynchronous Processing</li>
+    <li>High Availability and Fault Tolerance</li>
+  </ol>
+
+  <h2 id="sql">SQL / Database Topics</h2>
+  <ul>
+    <li>Normalisation &amp; need of normalisation</li>
+    <li>Schema building (VV-IMP)</li>
+    <li>SQL Queries — rank, aggregate, window functions</li>
+    <li>JOINs (inner, left, right, self, cross)</li>
+    <li>GROUP BY vs PARTITION BY</li>
+    <li>Window functions</li>
+    <li>Multiple ways to solve same question — explain your reasoning</li>
+  </ul>
+
+</div>
+</body>
+</html>
